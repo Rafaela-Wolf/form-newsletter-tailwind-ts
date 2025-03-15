@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { User } from "../types/user";
+import { validate } from "../utils/Validate";
 
 const Form = () => {
 
@@ -10,6 +11,18 @@ const Form = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    const data: User = {
+      name, 
+      email,
+      agree
+    };
+
+    const validateErrors = validate(data);
+
+    if(Object.keys(validateErrors).length > 0) {
+      
+    }
   }
 
   return (
@@ -20,6 +33,8 @@ const Form = () => {
           className="rounded-lg focus:ring-0 focus:outline-none py-2 px-2 text-sm placeholder:text-sm placeholder:text-stone-400"
           type="text"
           placeholder="Digite seu nome" 
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -29,6 +44,8 @@ const Form = () => {
           className="rounded-lg focus:ring-0 focus:outline-none py-2 px-2 text-sm placeholder:text-sm placeholder:text-stone-400"
           type="text"
           placeholder="Insira seu e-mail" 
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
 
@@ -37,6 +54,8 @@ const Form = () => {
         <div className="flex gap-2 items-center">
           <input 
             type="checkbox"
+            checked={agree}
+            onChange={(e) => setAgree(e.target.checked)}
           />
           <label className="text-sm" htmlFor="agree">Concordo com os termos</label>
         </div>
